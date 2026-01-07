@@ -1,26 +1,22 @@
 'use strict';
-var request = require('request');
+let request = require('request');
 
-// replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
-var url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=1PGYPYAXEWC99FMV';
+let api_key = "STNE15X0T16UDA4F";
+let array = ["SPY","QQQ","IAU", "VONE", "VONG", "VONV", "IWM", "IEF"];
+let url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey={api_key}`;
 
-function ApiCallWithDelay() {
-  request.get({
-    url: url,
-    json: true,
-    headers: {'User-Agent': 'request'}
-  }, (err, res, data) => {
-    if (err) {
-      console.log('Error:', err);
-    } else if (res.statusCode !== 200) {
-      console.log('Status:', res.statusCode);
-    } else {
-      // data is successfully parsed as a JSON object:
-      console.log(data);
-    }
+// Function to delay execution
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Sequential execution with delays
+let promies = array.map(async(Element, index) => {
+  // Wait for (index * 800ms) before making the call
+  // This spaces out calls by 0.8 seconds
+  await delay(index * 800);
+
+  return quotes_global.trigger({additionalScope: {symbol:
+    ele}});
 });
-  setTimeout(ApiCallWithDelay, 60000);
-}
 
-ApiCallWithDelay();
-
+console.log(promises);
+return Promise.all(promises);
