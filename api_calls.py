@@ -2,6 +2,7 @@ import time
 import requests
 import pandas as pd
 import json
+from sqlalchemy import create_engine
 
 # If file exists and no new updates, fetch data from existing file
 def fetch_data(*, update: bool = False, json_cache: str):
@@ -42,7 +43,7 @@ if __name__ == '__main__':
     interval = 60.0 / calls_per_minute  # Time between calls in seconds
     json_cache = "global_quote_endpoint.json"
     csv_filename = "global_quote_endpoint.csv"
-    data = fetch_data(update = False, json_cache = json_cache) # Call function to fetch existing data or make new api call
+    data = fetch_data(update = True, json_cache = json_cache) # Call function to fetch existing data or make new api call
     # Set update to true if need new data
 
     # Rename columns to remove numbers (ex. '01. symbol' becomes just 'symbol')
@@ -70,14 +71,37 @@ if __name__ == '__main__':
     df = pd.DataFrame(new_data)
     df.to_csv(csv_filename)
 
-    # Something to do in the future: Plot data
     # Create another pandas dataframe with just 2 columns (symbol, quantity), default value 1000 for both
-    symbol_quant = []
-    symbol_quant_csv = "symbol_quantity.csv"
-    symbol_quant_dict = {'symbol': '1000', 'quantity': '1000'}
-    symbol_quant.append(symbol_quant_dict)
-    df = pd.DataFrame(symbol_quant)
-    df.to_csv(symbol_quant_csv)
+    symbol_quantity = []
+    symbol_quantity_csv = "symbol_quantity.csv"
+    symbol_quantity_dict = {'symbol': '1000', 'quantity': '1000'}
+    symbol_quantity.append(symbol_quantity_dict)
+    df = pd.DataFrame(symbol_quantity)
+    df.to_csv(symbol_quantity_csv)
+
+    # log data to mysql database
+    # MySQL database connection details
+    DB_USER = 'root'
+    DB_PASSWORD = ''
+    DB_HOST = 'localhost'
+    DB_NAME = 'stock_apis'
+    CSV_FILE_PATH = csv_filename
+    TABLE_NAME = 'global_quote_endpoint'
+
+    # Create a database engine using SQLAlchemy
+    engine = create_engine(f'mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}')
+
+    # Read the CSV file into a Pandas DataFrame
+    df = pd.read_csv(CSV_FILE_PATH)
+
+    # Insert the data into the MySQL table
+    # if_exists='replace' drops previous table and creates new one with updated data
+    df.to_sql(TABLE_NAME, con=engine, index=False, if_exists='replace')
+
+    print(f"Data from {CSV_FILE_PATH} successfully imported into table {TABLE_NAME}.")
+
+    # Close the connection (handled by the engine implicitly, but good practice to be aware)
+    engine.dispose()
 
 # No longer need an external file keeping track of run times, program now throws "KeyboardInterrupt" error
 # if run again before previous run is complete
@@ -89,4 +113,4 @@ if __name__ == '__main__':
 
 # Also spreading out the calls evenly will ensure the rate limit will never be hit
 
-# log data to mysql database
+# Something to do in the future: Plot data
