@@ -44,7 +44,7 @@ if __name__ == '__main__':
     json_cache = "global_quote_endpoint.json"
     csv_filename = "global_quote_endpoint.csv"
     data = fetch_data(update = True, json_cache = json_cache) # Call function to fetch existing data or make new api call
-    # Set update to true if need new data
+    # Set update to true for new data
 
     # Rename columns to remove numbers (ex. '01. symbol' becomes just 'symbol')
     # split keys and remove if they can be converted to int
