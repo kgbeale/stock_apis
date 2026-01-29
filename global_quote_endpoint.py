@@ -36,6 +36,19 @@ def fetch_data(*, update: bool = False, json_cache: str):
     
     return json_data
 
+def rename_columns(d):
+    for key, value in d.items():
+        if isinstance(value, dict):
+            rename_columns(value)
+        else:
+            parts = key.split('.')
+            for part in parts:
+                try:
+                    int(part)
+                    continue
+                except ValueError:
+                    new_column_names.append(part)
+
 if __name__ == '__main__':
     api_key = "STNE15X0T16UDA4F"
     tickers = ["IBM", "MSFT", "AAPL", "UBS"]
@@ -46,34 +59,20 @@ if __name__ == '__main__':
     data = fetch_data(update = True, json_cache = json_cache) # Call function to fetch existing data or make new api call
     # Set update to true for new data
 
-    # Rename columns to remove numbers (ex. '01. symbol' becomes just 'symbol')
-    # split keys and remove if they can be converted to int
-    new_data = [] # Create new list to store updated data
-    for i in range(len(data)):
-        for key, value in data[i].items():
-            new_value = {}
-            for key1, value1 in value.items():
-                parts = key1.split('. ')
-                for part in parts:
-                    new_value[part] = value1
-            keys_to_remove = []
-            for key2, value2 in new_value.items():
-                try:
-                    int(key2)
-                    keys_to_remove.append(key2)
-                except ValueError:
-                    continue
-            for j in keys_to_remove:
-                del new_value[j]
-            new_data.append(new_value)
-
-    # Export data into csv file
-    df = pd.DataFrame(new_data)
+    # Export data to csv
+    df = pd.json_normalize(data)
+    new_column_names = [] # Create list to store new column names
+    print(data)
+    rename_columns(data[0]) # Function to rename columns (data[0] only passes one dictionary
+                            # from )
+    unique_column_names = list(dict.fromkeys(new_column_names)) # drops duplicates from list
+    for i in range(len(unique_column_names)):
+        df.rename(columns={df.columns[i]: unique_column_names[i]}, inplace=True)
     df.to_csv(csv_filename)
 
     # Create another pandas dataframe with just 2 columns (symbol, quantity), default value 1000 for both
     symbol_quantity = []
-    symbol_quantity_csv = "symbol_quantity.csv"
+    symbol_quantity_csv = "global_quote_symbol_quantity.csv"
     symbol_quantity_dict = {'symbol': '1000', 'quantity': '1000'}
     symbol_quantity.append(symbol_quantity_dict)
     df = pd.DataFrame(symbol_quantity)
@@ -114,3 +113,13 @@ if __name__ == '__main__':
 # Also spreading out the calls evenly will ensure the rate limit will never be hit
 
 # Something to do in the future: Plot data
+
+
+# Start this week: Real world stock analysis using code I've already developed
+# Couple more things need to be done here first
+# Course focused on financial market analysis using Python Pandas
+# Use data from Time Series Daily Adjusted endpoint (same code as I have here,
+# change names of files and update url to pull from Time Series Daily Adjusted)
+# Only use one ticker for now
+# Time Series Daily Adjusted shows last 100 days
+# Create new file so that the global quote code is saved

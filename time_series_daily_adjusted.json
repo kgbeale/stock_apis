@@ -9,12 +9,12 @@
         },
         "Time Series (Daily)": {
             "2026-01-28": {
-                "1. open": "293.53",
+                "1. open": "294.17",
                 "2. high": "295.95",
                 "3. low": "291.2601",
-                "4. close": "294.11",
-                "5. adjusted close": "294.11",
-                "6. volume": "5628994",
+                "4. close": "294.16",
+                "5. adjusted close": "294.16",
+                "6. volume": "5790347",
                 "7. dividend amount": "0.0000",
                 "8. split coefficient": "1.0"
             },
@@ -1020,12 +1020,12 @@
         },
         "Time Series (Daily)": {
             "2026-01-28": {
-                "1. open": "483.43",
+                "1. open": "483.21",
                 "2. high": "483.74",
                 "3. low": "478.0",
                 "4. close": "481.63",
                 "5. adjusted close": "481.63",
-                "6. volume": "32668815",
+                "6. volume": "36875403",
                 "7. dividend amount": "0.0000",
                 "8. split coefficient": "1.0"
             },
@@ -2031,12 +2031,12 @@
         },
         "Time Series (Daily)": {
             "2026-01-28": {
-                "1. open": "257.64",
+                "1. open": "257.65",
                 "2. high": "258.855",
                 "3. low": "254.51",
                 "4. close": "256.44",
                 "5. adjusted close": "256.44",
-                "6. volume": "40047383",
+                "6. volume": "41287971",
                 "7. dividend amount": "0.0000",
                 "8. split coefficient": "1.0"
             },
@@ -3042,12 +3042,12 @@
         },
         "Time Series (Daily)": {
             "2026-01-28": {
-                "1. open": "48.27",
+                "1. open": "48.25",
                 "2. high": "48.605",
                 "3. low": "47.4",
                 "4. close": "47.96",
                 "5. adjusted close": "47.96",
-                "6. volume": "2381340",
+                "6. volume": "2380696",
                 "7. dividend amount": "0.0000",
                 "8. split coefficient": "1.0"
             },

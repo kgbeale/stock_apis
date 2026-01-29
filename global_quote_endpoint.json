@@ -2,25 +2,25 @@
     {
         "Global Quote": {
             "01. symbol": "IBM",
-            "02. open": "293.5300",
+            "02. open": "294.1700",
             "03. high": "295.9500",
             "04. low": "291.2601",
-            "05. price": "294.1100",
-            "06. volume": "5690618",
+            "05. price": "294.1600",
+            "06. volume": "5790347",
             "07. latest trading day": "2026-01-28",
             "08. previous close": "293.8600",
-            "09. change": "0.2500",
-            "10. change percent": "0.0851%"
+            "09. change": "0.3000",
+            "10. change percent": "0.1021%"
         }
     },
     {
         "Global Quote": {
             "01. symbol": "MSFT",
-            "02. open": "483.4300",
+            "02. open": "483.2100",
             "03. high": "483.7400",
             "04. low": "478.0000",
             "05. price": "481.6300",
-            "06. volume": "33738475",
+            "06. volume": "36875403",
             "07. latest trading day": "2026-01-28",
             "08. previous close": "480.5800",
             "09. change": "1.0500",
@@ -30,11 +30,11 @@
     {
         "Global Quote": {
             "01. symbol": "AAPL",
-            "02. open": "257.6400",
+            "02. open": "257.6500",
             "03. high": "258.8550",
             "04. low": "254.5100",
             "05. price": "256.4400",
-            "06. volume": "40138254",
+            "06. volume": "41287971",
             "07. latest trading day": "2026-01-28",
             "08. previous close": "258.2700",
             "09. change": "-1.8300",
@@ -44,11 +44,11 @@
     {
         "Global Quote": {
             "01. symbol": "UBS",
-            "02. open": "48.2700",
+            "02. open": "48.2500",
             "03. high": "48.6050",
             "04. low": "47.4000",
             "05. price": "47.9600",
-            "06. volume": "2381345",
+            "06. volume": "2380696",
             "07. latest trading day": "2026-01-28",
             "08. previous close": "49.2500",
             "09. change": "-1.2900",
