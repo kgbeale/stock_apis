@@ -39,7 +39,7 @@ def fetch_data(*, update: bool = False, json_cache: str):
 
 if __name__ == '__main__':
     api_key = "STNE15X0T16UDA4F"
-    tickers = ["IBM", "MSFT", "AAPL", "UBS"]
+    tickers = ["UBS"]
     calls_per_minute = 75
     interval = 60.0 / calls_per_minute  # Time between calls in seconds
     json_cache = "time_series_daily_adjusted.json"

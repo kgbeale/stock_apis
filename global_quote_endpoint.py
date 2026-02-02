@@ -41,6 +41,7 @@ def rename_columns(d):
         if isinstance(value, dict):
             rename_columns(value)
         else:
+            # split keys to remove integers, add non-integers to columns list
             parts = key.split('.')
             for part in parts:
                 try:
@@ -59,12 +60,14 @@ if __name__ == '__main__':
     data = fetch_data(update = True, json_cache = json_cache) # Call function to fetch existing data or make new api call
     # Set update to true for new data
 
-    # Export data to csv
+    # Convert json to dataframe
     df = pd.json_normalize(data)
+
+    # Rename columns and export to csv
     new_column_names = [] # Create list to store new column names
-    print(data)
-    rename_columns(data[0]) # Function to rename columns (data[0] only passes one dictionary
-                            # from )
+    rename_columns(data[0]) # Function to rename columns (data[0] only passes one dictionary 
+                            # from a list of dictionaries (data) into the function 
+                            # (one dictionary is sufficient to change column names))
     unique_column_names = list(dict.fromkeys(new_column_names)) # drops duplicates from list
     for i in range(len(unique_column_names)):
         df.rename(columns={df.columns[i]: unique_column_names[i]}, inplace=True)
@@ -116,7 +119,6 @@ if __name__ == '__main__':
 
 
 # Start this week: Real world stock analysis using code I've already developed
-# Couple more things need to be done here first
 # Course focused on financial market analysis using Python Pandas
 # Use data from Time Series Daily Adjusted endpoint (same code as I have here,
 # change names of files and update url to pull from Time Series Daily Adjusted)
