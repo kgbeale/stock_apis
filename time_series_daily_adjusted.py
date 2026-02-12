@@ -61,25 +61,11 @@ if __name__ == '__main__':
                 try:
                     format = '%Y-%m-%d'
                     datetime.strptime(key1, format)
-                    new_dict = {}
-                    for key2, value2 in value1.items(): 
-                        parts = key2.split('. ')
-                        for part in parts:
-                            new_dict[part] = value2
-                        keys_to_remove = []
-                        for key3, value3 in new_dict.items():
-                            try:
-                                int(key3)
-                                keys_to_remove.append(key3)
-                            except ValueError:
-                                continue
-                        for j in keys_to_remove:
-                            del new_dict[j]
                     index += 1
                     index_list.append(index)
                     ticker_list.append(tickers[i])
                     date_list.append(key1)
-                    adjusted_close_list.append(new_dict['adjusted close'])
+                    adjusted_close_list.append(value1['5. adjusted close'])
                 except ValueError:
                     continue
     
