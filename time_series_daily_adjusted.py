@@ -39,12 +39,12 @@ def fetch_data(*, update: bool = False, json_cache: str):
 
 if __name__ == '__main__':
     api_key = "STNE15X0T16UDA4F"
-    tickers = ["UBS", "IBM"]
+    tickers = ["SPY"]
     calls_per_minute = 75
     interval = 60.0 / calls_per_minute  # Time between calls in seconds
     json_cache = "time_series_daily_adjusted.json"
     csv_filename = "time_series_daily_adjusted.csv"
-    data = fetch_data(update = True, json_cache = json_cache) # Call function to fetch existing data or make new api call
+    data = fetch_data(update = False, json_cache = json_cache) # Call function to fetch existing data or make new api call
     # Set update to true for new data
 
     # Create lists for each column to be added to dataframe
@@ -73,7 +73,25 @@ if __name__ == '__main__':
     time_series_dict = {"Index": index_list, "Ticker": ticker_list, "Date": date_list,
                    "Adjusted Close Price" : adjusted_close_list}
     df = pd.DataFrame(time_series_dict)
-    df.to_csv(csv_filename)
+    df['Adjusted Close Price'] = pd.to_numeric(df['Adjusted Close Price'], errors='coerce')
+    df['Return'] = df['Adjusted Close Price'].pct_change()
+    df['Date'] = pd.to_datetime(df['Date'])
+
+    df1 = pd.read_csv('returns_sample.csv')
+    # df1['Return'] = pd.to_numeric(df1['Return'], errors='coerce') # KGB column disappeared after adding this line
+
+    df1['Date'] = pd.to_datetime(df1['Date'])
+    combined_df = pd.concat([df, df1], ignore_index=True)
+    combined_df = combined_df.dropna(subset=['Return'])
+    wide_df = combined_df.pivot(index='Date', columns='Ticker', values='Return')
+    for i in range(len(wide_df.columns)):
+        wide_df = wide_df.dropna(subset=wide_df.columns[i])
+    print(wide_df)
+    wide_df.to_csv(csv_filename)
+    # Drop rows that have 'NaN' values
+
+    # merged_df = pd.merge(df, df1, on='Date') # make sure merge column is the same datatype on both dataframes
+    # print(merged_df)
 
     # Date column for dates in dataframe
     # df = (pd.DataFrame.from_dict(time_series=, orient="index")
@@ -115,6 +133,3 @@ if __name__ == '__main__':
 
     # Close the connection (handled by the engine implicitly, but good practice to be aware)
     engine.dispose()
-
-    # Took screenshot of ideal dataframe format
-    # Try multiple tickers
