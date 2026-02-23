@@ -99,11 +99,32 @@ if __name__ == '__main__':
     plt.title('Beta Visualization: Stock vs Market')
     plt.xlabel('Market Returns')
     plt.ylabel('Stock Returns')
-    # plt.show()
+    plt.show()
+    
     # Calculate beta
     lin_reg = linregress(wide_df['SPY'], wide_df['VOOG']) # calculate slope and intercept
     beta = lin_reg.slope # slope represents the beta of the stock
-    print("Beta: ", beta)
+    print('Beta: ', beta)
+
+    # 3 ways to calculate beta
+    # Beta = Slope of the regression line
+    # Beta = Covariance(ret_y, ret_mkt) / Variance(ret_mkt)
+    # Beta = Correlation * std_dev(y_ret) / std_dev(x_ret)
+    # R^2 = Correlation^2
+
+    # For next time
+    # Calculate standard deviation of VOOG
+    # Calculate standard deviation of market
+    # Calculate correlation
+    # Looks like each can be pulled from linear regression
+    # Once I have those values, calculate beta using those values
+    # Calculate average return for VOOG
+
+    # CAPM = Capital Asset Pricing Model
+    # CAPM formula: E(r) = RFR + Beta(E(r_mkt) - RFR)
+    # E(r_VOOG) = 4% + 1.25(8% - 4%)
+    # RFR stands for Risk Free Rate
+    # US government investment is generally risk free
 
     # Check how beta calculation compares to online beta
     # UBS Beta:
@@ -113,7 +134,7 @@ if __name__ == '__main__':
     # Calculate R-Squared
     y_pred = (beta * wide_df['SPY']) + lin_reg.intercept # calculate predicted values for y
     r2 = r2_score(wide_df['VOOG'], y_pred)
-    print('R-Squared: ', r2)
+    print('R-Squared: ', r2) # Percentage of volatility explained by the market
 
     # VOOG -> Replace UBS with VOOG, see how the graph changes
     # Clean up code if time permits
