@@ -25,7 +25,7 @@ def fetch_data(*, update: bool = False, json_cache: str):
     if not json_data:
         json_data = []
         for i in range(len(tickers)):
-            url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={tickers[i]}&apikey={api_key}'
+            url = f'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol={tickers[i]}&apikey={api_key}'
             r = requests.get(url)
             data = r.json()
             json_data.append(data)
@@ -47,8 +47,8 @@ if __name__ == '__main__':
     tickers = ["SPY", "VOOG"] # tickers[0] = market, tickers[1] = stock
     calls_per_minute = 75
     interval = 60.0 / calls_per_minute  # Time between calls in seconds
-    json_cache = "time_series_daily_adjusted.json"
-    csv_filename = "time_series_daily_adjusted.csv"
+    json_cache = "time_series_monthly_adjusted.json"
+    csv_filename = "time_series_monthly_adjusted.csv"
     data = fetch_data(update = True, json_cache = json_cache) # Function to use existing data or pull new data from alpha vantage
     # Set update to true for new data
 
@@ -166,7 +166,7 @@ if __name__ == '__main__':
 
     # Create another pandas dataframe with just 2 columns (symbol, quantity), default value 1000 for both
     symbol_quantity = []
-    symbol_quantity_csv = "daily_adjusted_symbol_quantity.csv"
+    symbol_quantity_csv = "monthly_adjusted_symbol_quantity.csv"
     symbol_quantity_dict = {'symbol': '1000', 'quantity': '1000'}
     symbol_quantity.append(symbol_quantity_dict)
     df = pd.DataFrame(symbol_quantity)
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     DB_HOST = 'localhost'
     DB_NAME = 'stock_market_analysis'
     CSV_FILE_PATH = csv_filename
-    TABLE_NAME = 'time_series_daily_adjusted'
+    TABLE_NAME = 'time_series_monthly_adjusted'
 
     # Create a database engine using SQLAlchemy
     engine = create_engine(f'mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}')
