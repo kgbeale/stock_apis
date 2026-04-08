@@ -86,7 +86,7 @@ if __name__ == '__main__':
     DB_USER = 'root'
     DB_PASSWORD = ''
     DB_HOST = 'localhost'
-    DB_NAME = 'stock_apis'
+    DB_NAME = 'stock_market_analysis'
     CSV_FILE_PATH = csv_filename
     TABLE_NAME = 'global_quote_endpoint'
 
